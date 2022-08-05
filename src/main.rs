@@ -31,7 +31,8 @@ fn copy_file(source: &Path, destination: &Path) {
 
 fn copy_folder(source: &Path, destination: &Path) {
     fs::create_dir_all(destination).unwrap();
-    for entry in WalkDir::new(source) {
+    let walker = WalkDir::new(source).into_iter();
+    for entry in walker.skip(1) {
         let entry = entry.unwrap();
         let path = entry.path();
         if path.is_file() {
