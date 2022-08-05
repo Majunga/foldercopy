@@ -32,15 +32,21 @@ fn copy_file(source: &Path, destination: &Path) {
 fn copy_folder(source: &Path, destination: &Path) {
     fs::create_dir_all(destination).unwrap();
     let walker = WalkDir::new(source).into_iter();
+    let mut file_count = 0;
     for entry in walker.skip(1) {
         let entry = entry.unwrap();
         let path = entry.path();
+        print!("Copying: {}\n", path.display());
         if path.is_file() {
             copy_file(&path, &destination.join(path.file_name().unwrap()));
+            file_count += 1;
         } else if path.is_dir() {
             fs::create_dir_all(&destination.join(path.file_name().unwrap())).unwrap();
         }
+
     }
+
+    println!("Files Copied {}", file_count);
 }
 
 fn copy_files(config: &Config) {
