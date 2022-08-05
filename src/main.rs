@@ -8,6 +8,10 @@ extern crate chrono;
 use std::fs;
 use std::path::Path;
 use walkdir::WalkDir;
+use std::thread::sleep;
+use std::time::Duration;
+use chrono::offset::Utc;
+use chrono::DateTime;
 
 struct Config {
     source: String,
@@ -61,10 +65,6 @@ fn copy_files(config: &Config) {
     }
 }
 
-use std::thread::sleep;
-use std::time::Duration;
-use chrono::offset::Utc;
-use chrono::DateTime;
 
 fn main() {
     let config = parse_config();
